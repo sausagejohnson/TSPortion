@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using TSPortion.Constants;
+using TSPortion.Entities;
 
 namespace TSPortion
 {
@@ -41,13 +42,27 @@ namespace TSPortion
 
                             int byte2 = reader.Read();
                             int byte3 = reader.Read();
+                            int byte4 = reader.Read();
+                            int byte5 = reader.Read();
                             //watch out for end of file here. Make safe
 
                             Console.WriteLine($"dec: {byte2} bin:{Converters.IntByteToBinaryString(byte2)} / dec: {byte3} bin: {Converters.IntByteToBinaryString(byte3)}");
-                            short _16bit = Converters.BytesToPIDType(byte2, byte3);
+                            ushort _16bit = Converters.BytesToPIDType(byte2, byte3);
 
-                            Console.WriteLine("Bytes: {0}", Converters.IntShortToBinaryString(_16bit));
-                            Console.WriteLine("PID Could be: {0} and in Hex: {1:X}", Converters.IntShortToBinaryString(Converters.ExtractPIDTypeFromTSPacketShort(_16bit)), Converters.ExtractPIDTypeFromTSPacketShort(_16bit));
+                            Console.WriteLine("Bytes: {0}", Converters.IntUShortToBinaryString(_16bit));
+                            Console.WriteLine("PID Could be: {0} and in Hex: {1:X}", Converters.IntUShortToBinaryString(Converters.ExtractPIDTypeFromTSPacketUShort(_16bit)), Converters.ExtractPIDTypeFromTSPacketUShort(_16bit));
+
+                            byte[] bytesForPacket = new byte[]
+                            {
+                                (byte)b,
+                                (byte)byte2,
+                                (byte)byte2,
+                                (byte)byte2,
+                                (byte)byte2
+                            };
+
+                            TransportPacket packet = new TransportPacket(bytesForPacket);
+                            Console.WriteLine(packet.GetDebugOutput());
 
                             Console.ReadKey();
                         }

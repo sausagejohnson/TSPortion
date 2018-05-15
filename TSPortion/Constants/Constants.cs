@@ -24,23 +24,23 @@ namespace TSPortion.Constants
             return Convert.ToString(byt, 2).PadLeft(8, '0');
         }
 
-        public static string IntShortToBinaryString(short bytes)
+        public static string IntUShortToBinaryString(ushort bytes)
         {
             return Convert.ToString(bytes, 2).PadLeft(16, '0');
         }
 
-        public static short ExtractPIDTypeFromTSPacketShort(short bytes)
+        public static ushort ExtractPIDTypeFromTSPacketUShort(ushort bytes)
         {
             byte[] bytes16 = BitConverter.GetBytes(bytes);
             int shift = (int)bytes16[0] << 3;
             shift = shift >> 3;
             bytes16[0] = (byte)shift;
 
-            return BitConverter.ToInt16(bytes16, 0);
+            return BitConverter.ToUInt16(bytes16, 0);
 
         }
 
-        public static short BytesToPIDType(int byte1, int byte2)
+        public static ushort BytesToPIDType(int byte1, int byte2)
         {
             byte[] bytes = new byte[]
             {
@@ -48,7 +48,7 @@ namespace TSPortion.Constants
                 (byte)byte2
             };
 
-            short _16BitShort = BitConverter.ToInt16(bytes, 0);
+            ushort _16BitShort = BitConverter.ToUInt16(bytes, 0);
             return _16BitShort;
         }
 
